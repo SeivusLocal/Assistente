@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações dos Itens</title>
+    <style>
+        .container {
+            background-color: #FAFAD2; /* Cor de fundo */
+            min-height: 100vh; /* Garante que o contêiner ocupe toda a altura da viewport */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .titulo-principal {
+            max-width: 480px;
+            text-align: center;
+            margin: 60px auto;
+            font-family: 'Courier New', Courier, monospace;
+            color: #000; /* Cor do texto */
+            font-size: 2rem; /* Tamanho da fonte */
+            padding: 20px; /* Espaçamento interno */
+            background-color: #FFF; /* Cor de fundo do título */
+            border-radius: 10px; /* Borda arredondada */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .titulo-principal:after {
+            content: '|';
+            margin-left: 5px;
+            opacity: 1;
+            animation: pisca .7s infinite;
+        }
+
+        @keyframes pisca {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .itens-selecionados {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px; /* Espaçamento superior */
+        }
+
+        .item {
+            width: 200px; /* Largura das opções */
+            margin: 10px; /* Espaçamento entre as opções */
+            padding: 10px; /* Espaçamento interno */
+            font-size: 1rem; /* Tamanho da fonte */
+            color: #000; /* Cor do texto */
+            background-color: #FFF; /* Cor de fundo das opções */
+            border: 2px solid #000; /* Borda sólida */
+            border-radius: 5px; /* Borda arredondada */
+            text-align: center; /* Alinhamento do texto */
+        }
+
+        .botao {
+            margin-top: 20px; /* Espaçamento superior */
+            padding: 10px 20px; /* Espaçamento interno */
+            font-size: 1.5rem; /* Tamanho da fonte do botão */
+            background-color: #FFE4B5; /* Cor de fundo do botão */
+            color: #000; /* Cor do texto do botão */
+            border: none; /* Sem borda */
+            border-radius: 5px; /* Borda arredondada */
+            cursor: pointer; /* Cursor de ponteiro ao passar */
+            transition: background-color 0.3s; /* Transição suave */
+            margin: 10px; /* Espaçamento entre os botões */
+        }
+
+        .botao:hover {
+            background-color: #FFDAB9; /* Mudança de cor ao passar */
+        }
+    </style>
+</head>
+<body class="container">
+    <h1 class="titulo-principal">Informações dos Itens</h1>
+
+    <div class="itens-selecionados" id="itens-selecionados">
+        <!-- Itens selecionados aparecerão aqui -->
+    </div>
+
+    <button class="botao" onclick="fecharPedido()">Fechar Pedido</button>
+    <button class="botao" onclick="pararPorAqui()">Parar por aqui</button>
+
+    <script>
+        // Função para simular efeito de digitação no título
+        function typeWrite(elemento) {
+            const textoArray = elemento.innerHTML.split('');
+            elemento.innerHTML = ' ';
+            textoArray.forEach(function(letra, i) {
+                setTimeout(function() {
+                    elemento.innerHTML += letra;
+                }, 75 * i)
+            });
+        }
+
+        const titulo = document.querySelector('.titulo-principal');
+        typeWrite(titulo);
+
+        // Função para obter parâmetros da URL
+        function getQueryParams() {
+            let params = {};
+            let queryString = window.location.search.slice(1);
+            let paramPairs = queryString.split('&');
+            paramPairs.forEach(pair => {
+                let [key, value] = pair.split('=');
+                params[key] = decodeURIComponent(value.replace(/\+/g, ' '));
+            });
+            return params;
+        }
+
+        // Dados fictícios dos itens para demonstração
+        const dadosItens = {
+            "Tintas": { preco: "R$50,00", disponibilidade: "Em estoque" },
+            "Pincéis": { preco: "R$15,00", disponibilidade: "Em estoque" },
+            "Rolos": { preco: "R$25,00", disponibilidade: "Em estoque" },
+            "Desempenadeira": { preco: "R$30,00", disponibilidade: "Em estoque" },
+            "Espátula": { preco: "R$10,00", disponibilidade: "Em estoque" },
+            "Lixa": { preco: "R$5,00", disponibilidade: "Em estoque" },
+            "Aplicador de massa": { preco: "R$20,00", disponibilidade: "Em estoque" },
+            "Bandeja plástica": { preco: "R$12,00", disponibilidade: "Em estoque" },
+            "Suportes": { preco: "R$8,00", disponibilidade: "Em estoque" },
+            "Extensores": { preco: "R$18,00", disponibilidade: "Em estoque" },
+            "Fitas": { preco: "R$3,00", disponibilidade: "Em estoque" },
+            "Escovas": { preco: "R$7,00", disponibilidade: "Em estoque" },
+            "Mexedores": { preco: "R$2,00", disponibilidade: "Em estoque" },
+            "Kits": { preco: "R$100,00", disponibilidade: "Em estoque" },
+        };
+
+        // Função para exibir os itens selecionados com informações
+        function mostrarItensSelecionados() {
+            let params = getQueryParams();
+            let itens = params.itens ? params.itens.split(',') : [];
+            let container = document.getElementById('itens-selecionados');
+
+            itens.forEach(item => {
+                if (dadosItens[item]) {
+                    let itemDiv = document.createElement('div');
+                    itemDiv.classList.add('item');
+
+                    itemDiv.innerHTML = `
+                        <input type="checkbox" id="${item}" name="itemSelecionado" value="${item}">
+                        <label for="${item}">${item}</label>
+                        <p>Preço: ${dadosItens[item].preco}</p>
+                        <p>Disponibilidade: ${dadosItens[item].disponibilidade}</p>
+                    `;
+
+                    container.appendChild(itemDiv);
+                }
+            });
+        }
+
+        mostrarItensSelecionados();
+
+        // Função para fechar pedido
+        function fecharPedido() {
+            let itensSelecionados = [];
+            let checkboxes = document.querySelectorAll('input[name="itemSelecionado"]:checked');
+            let params = getQueryParams();
+            let nome = params.nome || "Cliente";
+
+            checkboxes.forEach(checkbox => {
+                itensSelecionados.push(checkbox.value);
+            });
+
+            if (itensSelecionados.length > 0) {
+                let mensagem = `Olá, meu nome é ${nome} e quero comprar os seguintes itens: ${itensSelecionados.join(', ')}`;
+                let whatsappLink = "https://wa.me/5551993997303text=" + encodeURIComponent(mensagem);
+                window.location.href = whatsappLink;
+            } else {
+                alert("Por favor, selecione pelo menos um item.");
+            }
+        }
+
+        // Função para parar por aqui e voltar à página de busca
+        function pararPorAqui() {
+            let params = getQueryParams();
+            let nome = params.nome || "";
+            window.location.href = `busca.html?nome=${nome}`;
+        }
+    </script>
+</body>
+</html>

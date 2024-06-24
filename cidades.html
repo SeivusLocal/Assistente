@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha uma cidade</title>
+    <style>
+        .container {
+            background-color: #EEE8AA; /* Cor de fundo solicitada */
+            height: 100vh; /* Garante que o contêiner ocupe toda a altura da viewport */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .titulo-principal {
+            max-width: 480px;
+            text-align: center;
+            margin: 60px auto;
+            font-family: 'Courier New', Courier, monospace;
+            color: #000; /* Cor do texto */
+            font-size: 2rem; /* Tamanho da fonte */
+            padding: 20px; /* Espaçamento interno */
+            background-color: #FFF; /* Cor de fundo do título */
+            border-radius: 10px; /* Borda arredondada */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .titulo-principal:after {
+            content: '|';
+            margin-left: 5px;
+            opacity: 1;
+            animation: pisca .7s infinite;
+        }
+
+        @keyframes pisca {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .opcoes-cidade {
+            margin-top: 20px; /* Espaçamento superior */
+            text-align: center; /* Alinhamento do texto */
+        }
+
+        .campo-cidade {
+            margin-top: 10px; /* Espaçamento superior */
+            padding: 10px; /* Espaçamento interno */
+            font-size: 1.5rem; /* Tamanho da fonte do campo */
+            border: 2px solid #000; /* Borda sólida */
+            border-radius: 5px; /* Borda arredondada */
+            width: 300px; /* Largura do campo */
+            text-align: center; /* Alinhamento do texto */
+        }
+
+        .botao-continuar {
+            margin-top: 20px; /* Espaçamento superior */
+            padding: 10px 20px; /* Espaçamento interno */
+            font-size: 1.5rem; /* Tamanho da fonte do botão */
+            background-color: #FFFFF0; /* Cor de fundo do botão */
+            color: #000; /* Cor do texto do botão */
+            border: none; /* Sem borda */
+            border-radius: 5px; /* Borda arredondada */
+            cursor: pointer; /* Cursor de ponteiro ao passar */
+            transition: background-color 0.3s; /* Transição suave */
+        }
+
+        .botao-continuar:hover {
+            background-color: #CCC; /* Mudança de cor ao passar */
+        }
+    </style>
+</head>
+<body class="container">
+    <h1 class="titulo-principal">Escolha uma cidade</h1>
+
+    <div class="opcoes-cidade">
+        <select id="cidade" class="campo-cidade">
+            <option value="">Selecione uma cidade</option>
+            <option value="Porto Alegre">Porto Alegre</option>
+            <option value="Caxias do Sul">Caxias do Sul</option>
+            <option value="Montenegro">Montenegro</option>
+            <option value="Pelotas">Pelotas</option>
+        </select>
+    </div>
+
+    <button class="botao-continuar" onclick="selecionarCidade()">Continuar</button>
+
+    <script>
+        // Função para simular efeito de digitação no título
+        function typeWrite(elemento) {
+            const textoArray = elemento.innerHTML.split('');
+            elemento.innerHTML = ' ';
+            textoArray.forEach(function(letra, i) {
+                setTimeout(function() {
+                    elemento.innerHTML += letra;
+                }, 75 * i)
+            });
+        }
+
+        const titulo = document.querySelector('.titulo-principal');
+        typeWrite(titulo);
+
+        // Função para redirecionar com base na escolha da cidade
+        function selecionarCidade() {
+            var select = document.getElementById('cidade');
+            var cidadeSelecionada = select.value;
+
+            if (cidadeSelecionada) {
+                // Redirecionar para a página busca.html com a cidade selecionada como parâmetro
+                window.location.href = "busca.html?cidade=" + encodeURIComponent(cidadeSelecionada);
+            } else {
+                alert("Por favor, selecione uma cidade.");
+            }
+        }
+    </script>
+</body>
+</html>
