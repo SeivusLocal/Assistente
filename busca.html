@@ -43,24 +43,32 @@
             }
         }
 
-        .lista-itens {
-            list-style: none; /* Remove marcadores */
-            padding: 0; /* Remove padding */
-            margin: 20px 0; /* Margem superior e inferior */
+        .opcoes-item {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+            gap: 20px; /* Espaçamento entre os itens */
+            margin-top: 20px; /* Espaçamento superior */
         }
 
-        .item {
-            margin: 10px 0; /* Margem entre itens */
+        .opcao {
+            display: flex;
+            align-items: center;
             padding: 10px; /* Espaçamento interno */
             font-size: 1.2rem; /* Tamanho da fonte */
             color: #000; /* Cor do texto */
-            background-color: #FFF; /* Cor de fundo dos itens */
+            background-color: #FFF; /* Cor de fundo das opções */
             border: 2px solid #000; /* Borda sólida */
             border-radius: 5px; /* Borda arredondada */
-            text-align: center; /* Alinhamento do texto */
+            cursor: pointer; /* Cursor de ponteiro ao passar */
+            transition: background-color 0.3s, transform 0.2s; /* Transições suaves */
         }
 
-        .botao-fechar {
+        .opcao:hover {
+            background-color: #FFE4B5; /* Mudança de cor ao passar */
+            transform: translateY(-5px); /* Efeito de elevação */
+        }
+
+        .botao-continuar {
             margin-top: 20px; /* Espaçamento superior */
             padding: 10px 20px; /* Espaçamento interno */
             font-size: 1.5rem; /* Tamanho da fonte do botão */
@@ -72,109 +80,109 @@
             transition: background-color 0.3s; /* Transição suave */
         }
 
-        .botao-fechar:hover {
-            background-color: #FFDAB9; /* Mudança de cor ao passar */
-        }
-
-        .botao-parar {
-            margin-top: 20px; /* Espaçamento superior */
-            padding: 10px 20px; /* Espaçamento interno */
-            font-size: 1.5rem; /* Tamanho da fonte do botão */
-            background-color: #FFE4B5; /* Cor de fundo do botão */
-            color: #000; /* Cor do texto do botão */
-            border: none; /* Sem borda */
-            border-radius: 5px; /* Borda arredondada */
-            cursor: pointer; /* Cursor de ponteiro ao passar */
-            transition: background-color 0.3s; /* Transição suave */
-        }
-
-        .botao-parar:hover {
+        .botao-continuar:hover {
             background-color: #FFDAB9; /* Mudança de cor ao passar */
         }
     </style>
 </head>
 <body class="container">
-    <h1 class="titulo-principal">Itens Selecionados</h1>
+    <h1 class="titulo-principal">O que está procurando?</h1>
 
-    <ul class="lista-itens" id="lista-itens">
-        <!-- Itens serão adicionados aqui pelo JavaScript -->
-    </ul>
+    <div class="opcoes-item">
+        <div class="opcao">
+            <input type="checkbox" id="tintas" name="item" value="Tintas">
+            <label for="tintas">Tintas</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="pinceis" name="item" value="Pincéis">
+            <label for="pinceis">Pincéis</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="rolos" name="item" value="Rolos">
+            <label for="rolos">Rolos</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="desempenadeira" name="item" value="Desempenadeira">
+            <label for="desempenadeira">Desempenadeira</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="espatula" name="item" value="Espátula">
+            <label for="espatula">Espátula</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="lixa" name="item" value="Lixa">
+            <label for="lixa">Lixa</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="aplicador-massa" name="item" value="Aplicador de massa">
+            <label for="aplicador-massa">Aplicador de massa</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="bandeja-plastica" name="item" value="Bandeja plástica">
+            <label for="bandeja-plastica">Bandeja plástica</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="suportes" name="item" value="Suportes">
+            <label for="suportes">Suportes</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="extensores" name="item" value="Extensores">
+            <label for="extensores">Extensores</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="fitas" name="item" value="Fitas">
+            <label for="fitas">Fitas</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="escovas" name="item" value="Escovas">
+            <label for="escovas">Escovas</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="mexedores" name="item" value="Mexedores">
+            <label for="mexedores">Mexedores</label>
+        </div>
+        <div class="opcao">
+            <input type="checkbox" id="kits" name="item" value="Kits">
+            <label for="kits">Kits</label>
+        </div>
+    </div>
 
-    <button class="botao-fechar" onclick="fecharPedido()">Fechar Pedido</button>
-    <button class="botao-parar" onclick="pararPorAqui()">Parar por aqui</button>
+    <button class="botao-continuar" onclick="selecionarItens()">Continuar</button>
 
     <script>
-        // Estrutura de dados para armazenar preços dos itens
-        const precosItens = {
-            "Tintas": 50.00,
-            "Pincéis": 15.00,
-            "Rolos": 20.00,
-            "Desempenadeira": 25.00,
-            "Espátula": 10.00,
-            "Lixa": 5.00,
-            "Aplicador de massa": 30.00,
-            "Bandeja plástica": 12.00,
-            "Suportes": 40.00,
-            "Extensores": 35.00,
-            "Fitas": 8.00,
-            "Escovas": 18.00,
-            "Mexedores": 3.00,
-            "Kits": 60.00
-        };
-
-        // Função para obter parâmetros da URL
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                nome: params.get('nome'),
-                itens: params.get('itens').split(',')
-            };
-        }
-
-        // Função para preencher a lista de itens
-        function preencherListaItens(itens) {
-            const lista = document.getElementById('lista-itens');
-            itens.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item} - R$ ${precosItens[item].toFixed(2)}`;
-                li.classList.add('item');
-                lista.appendChild(li);
-            });
-        }
-
-        // Função para redirecionar para o WhatsApp com a mensagem personalizada
-        function fecharPedido() {
-            const { nome, itens } = getQueryParams();
-            const mensagem = `Olá, meu nome é ${nome} e quero comprar: ${itens.map(item => `${item} (R$ ${precosItens[item].toFixed(2)})`).join(', ')}.`;
-            const urlWhatsApp = `https://wa.me/5551993997303?text=${encodeURIComponent(mensagem)}`;
-            window.location.href = urlWhatsApp;
-        }
-
-        // Função para redirecionar de volta para a página de busca
-        function pararPorAqui() {
-            const { nome } = getQueryParams();
-            window.location.href = `busca.html?nome=${nome}`;
-        }
-
-        // Simulação do efeito de digitação no título
+        // Função para simular efeito de digitação no título
         function typeWrite(elemento) {
             const textoArray = elemento.innerHTML.split('');
             elemento.innerHTML = ' ';
             textoArray.forEach(function(letra, i) {
                 setTimeout(function() {
                     elemento.innerHTML += letra;
-                }, 75 * i)
+                }, 75 * i);
             });
         }
 
         const titulo = document.querySelector('.titulo-principal');
         typeWrite(titulo);
 
-        // Preencher a lista de itens ao carregar a página
-        window.onload = function() {
-            const { itens } = getQueryParams();
-            preencherListaItens(itens);
-        };
+        // Função para redirecionar com base nos itens selecionados
+        function selecionarItens() {
+            var itensSelecionados = [];
+            var checkboxes = document.querySelectorAll('input[name="item"]:checked');
+
+            checkboxes.forEach(function(checkbox) {
+                itensSelecionados.push(checkbox.value);
+            });
+
+            if (itensSelecionados.length > 0) {
+                // Redirecionar para a próxima página com os itens selecionados como parâmetro
+                var parametros = encodeURIComponent(itensSelecionados.join(','));
+                var urlParams = new URLSearchParams(window.location.search);
+                var nome = urlParams.get('nome');
+                window.location.href = `informacoes.html?nome=${encodeURIComponent(nome)}&itens=${parametros}`;
+            } else {
+                alert("Por favor, selecione pelo menos um item.");
+            }
+        }
     </script>
 </body>
 </html>
