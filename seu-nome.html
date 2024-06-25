@@ -72,7 +72,7 @@
 </head>
 <body class="container">
     <h1 class="titulo-principal">qual o seu nome?</h1>
-    <input type="text" id="nomeUsuario" class="campo-digitar" placeholder="Digite seu nome">
+    <input type="text" class="campo-digitar" placeholder="Digite seu nome" id="nome">
     <button class="botao-continuar" onclick="continuar()">Continuar</button>
 
     <script>
@@ -90,13 +90,12 @@
         const titulo = document.querySelector('.titulo-principal');
         typeWrite(titulo);
 
-        // Função para capturar o nome e redirecionar para a página cidades.html com o nome como parâmetro
         function continuar() {
-            const nome = document.getElementById('nomeUsuario').value;
-            if (nome) {
-                window.location.href = `cidades.html?nome=${encodeURIComponent(nome)}`;
+            const nome = document.getElementById('nome').value;
+            if (nome.trim()) {
+                window.location.href = 'cidades.html?nome=' + encodeURIComponent(nome);
             } else {
-                alert("Por favor, digite seu nome.");
+                alert('Por favor, insira seu nome.');
             }
         }
     </script>
