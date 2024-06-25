@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escolha uma cidade</title>
+    <title>Escolha uma Cidade</title>
     <style>
         .container {
-            background-color: #EEE8AA; /* Cor de fundo solicitada */
+            background-color: #FFF5EE; /* Cor de fundo solicitada */
             height: 100vh; /* Garante que o contêiner ocupe toda a altura da viewport */
             display: flex;
             justify-content: center;
@@ -43,13 +43,8 @@
             }
         }
 
-        .opcoes-cidade {
+        .campo-selecao {
             margin-top: 20px; /* Espaçamento superior */
-            text-align: center; /* Alinhamento do texto */
-        }
-
-        .campo-cidade {
-            margin-top: 10px; /* Espaçamento superior */
             padding: 10px; /* Espaçamento interno */
             font-size: 1.5rem; /* Tamanho da fonte do campo */
             border: 2px solid #000; /* Borda sólida */
@@ -62,7 +57,7 @@
             margin-top: 20px; /* Espaçamento superior */
             padding: 10px 20px; /* Espaçamento interno */
             font-size: 1.5rem; /* Tamanho da fonte do botão */
-            background-color: #FFFFF0; /* Cor de fundo do botão */
+            background-color: #EEE8AA; /* Cor de fundo do botão */
             color: #000; /* Cor do texto do botão */
             border: none; /* Sem borda */
             border-radius: 5px; /* Borda arredondada */
@@ -77,18 +72,13 @@
 </head>
 <body class="container">
     <h1 class="titulo-principal">Escolha uma cidade</h1>
-
-    <div class="opcoes-cidade">
-        <select id="cidade" class="campo-cidade">
-            <option value="">Selecione uma cidade</option>
-            <option value="Porto Alegre">Porto Alegre</option>
-            <option value="Caxias do Sul">Caxias do Sul</option>
-            <option value="Montenegro">Montenegro</option>
-            <option value="Pelotas">Pelotas</option>
-        </select>
-    </div>
-
-    <button class="botao-continuar" onclick="selecionarCidade()">Continuar</button>
+    <select class="campo-selecao" id="cidade">
+        <option value="Porto Alegre">Porto Alegre</option>
+        <option value="Caxias do Sul">Caxias do Sul</option>
+        <option value="Montenegro">Montenegro</option>
+        <option value="Pelotas">Pelotas</option>
+    </select>
+    <button class="botao-continuar" onclick="continuar()">Continuar</button>
 
     <script>
         // Função para simular efeito de digitação no título
@@ -105,17 +95,10 @@
         const titulo = document.querySelector('.titulo-principal');
         typeWrite(titulo);
 
-        // Função para redirecionar com base na escolha da cidade
-        function selecionarCidade() {
-            var select = document.getElementById('cidade');
-            var cidadeSelecionada = select.value;
-
-            if (cidadeSelecionada) {
-                // Redirecionar para a página busca.html com a cidade selecionada como parâmetro
-                window.location.href = "busca.html?cidade=" + encodeURIComponent(cidadeSelecionada);
-            } else {
-                alert("Por favor, selecione uma cidade.");
-            }
+        function continuar() {
+            const nome = new URLSearchParams(window.location.search).get('nome');
+            const cidade = document.getElementById('cidade').value;
+            window.location.href = 'busca.html?nome=' + encodeURIComponent(nome) + '&cidade=' + encodeURIComponent(cidade);
         }
     </script>
 </body>
